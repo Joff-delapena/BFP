@@ -1,12 +1,11 @@
-import { Hero } from '../components/Hero';
-import WeeklyReports from '../components/WeeklyReports';
+import Hero from '../components/Hero';
+
 
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <WeeklyReports />
     </>
   );
 }

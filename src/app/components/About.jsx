@@ -1,106 +1,152 @@
 import React, { useState, useEffect } from "react";
-import { Target, Eye, ShieldCheck } from "lucide-react";
+import { Target, Eye, ShieldCheck, FileText } from "lucide-react";
 
 export function About() {
   const images = ["/Fire.jpg", "/Wall.jpg", "/Cogon.jpg", "/HELP.jpg"];
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  // Automatic slideshow every 3 seconds
+  // Auto slideshow
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000);
+      setCurrentIndex((prev) => (prev + 1) % images.length);
+    }, 3500);
     return () => clearInterval(interval);
-  }, []);
+  }, [images.length]);
 
   return (
-    <section id="about" className="py-16 bg-white">
-      <div className="container mx-auto px-4">
+    <section className="bg-gray-50 py-20">
+      <div className="container mx-auto px-6">
 
-        {/* About Text + Slideshow */}
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+        {/* 🔥 Top Section */}
+        <div className="grid md:grid-cols-2 gap-14 items-center mb-20">
 
-          {/* Text Column */}
+          {/* Text Side */}
           <div>
-            <h2 className="text-3xl font-bold mb-6 text-gray-800">
-              STATION 1 COGON FIRE STATION - BUREAU OF FIRE PROTECTION
+            <h2 className="md:text-3xl font-extrabold leading-tight text-gray-900 mb-6">
+              STATION 1 COGON FIRE STATION - <br />
+              <span className="text-red-600">
+                BUREAU OF FIRE PROTECTION
+              </span>
             </h2>
-            <p className="text-gray-600 mb-4">
-              The Bureau of Fire Protection - Cagayan de Oro City is the primary
+
+            <p className="text-gray-600 mb-5 text-lg">
+              The Bureau of Fire Protection – Cagayan de Oro City is the primary
               government agency responsible for fire prevention, suppression,
               and auxiliary services.
             </p>
-            <p className="text-gray-600 mb-4">
-              We serve the residents, businesses, and institutions of Cagayan de
-              Oro, providing 24/7 emergency response and fire safety education.
+
+            <p className="text-gray-600 mb-5 text-lg">
+              We serve residents, businesses, and institutions by providing
+              24/7 emergency response and fire safety education.
             </p>
-            <p className="text-gray-600">
+
+            <p className="text-gray-600 text-lg">
               Our dedicated team works tirelessly to prevent fires, respond to
-              emergencies, and promote fire safety awareness throughout the
-              city.
+              emergencies, and promote fire safety awareness throughout the city.
             </p>
           </div>
 
-          {/* Slideshow Column */}
-          <div className="relative w-full h-[400px] rounded-lg overflow-hidden shadow-lg">
+          {/* Slideshow Side */}
+          <div className="relative h-[420px] rounded-2xl overflow-hidden shadow-2xl group">
             <img
               src={images[currentIndex]}
-              alt="Slideshow"
-              className="w-full h-full object-cover transition-opacity duration-700"
+              alt="Fire Station"
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
             />
+
+            <div className="absolute inset-0 bg-black/10"></div>
+
+            {/* indicator */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              {images.map((_, index) => (
+                <div
+                  key={index}
+                  className={`w-3 h-3 rounded-full ${
+                    currentIndex === index
+                      ? "bg-red-600"
+                      : "bg-white/70"
+                  }`}
+                ></div>
+              ))}
+            </div>
           </div>
         </div>
 
-        {/* WHO ARE WE */}
-        <div className="mb-35 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <ShieldCheck className="w-8 h-8 text-red-600" />
-            <h2 className="text-3xl font-bold text-gray-800">Who Are We</h2>
+        {/* 🛡 Who Are We */}
+        <div className="text-center max-w-3xl mx-auto mb-20">
+          <div className="flex justify-center items-center gap-3 mb-4">
+            <ShieldCheck className="w-9 h-9 text-red-600" />
+            <h3 className="text-3xl font-bold text-gray-900">
+              Who Are We
+            </h3>
           </div>
 
-          <p className="text-gray-600 mb-2">
+          <p className="text-gray-600 text-lg mb-4">
             We are a team of highly trained and dedicated fire protection
             professionals committed to safeguarding lives and properties.
           </p>
-          <p className="text-gray-600">
+
+          <p className="text-gray-600 text-lg">
             Our firefighters, rescue personnel, and administrative staff work
             around the clock to provide comprehensive fire protection services.
           </p>
         </div>
 
-        {/* Mission and Vision */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:justify-items-center">
+        {/* 🎯 Mission, Vision & Mandate */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
 
           {/* Mission */}
-          <div className="bg-red-50 p-8 rounded-lg w-full max-w-sm">
-            <div className="bg-red-600 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <Target className="w-7 h-7 text-white" />
+          <div className="bg-white rounded-2xl shadow-lg p-10 text-center hover:shadow-2xl transition">
+            <div className="bg-red-600 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Target className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800 text-center">
+
+            <h4 className="text-2xl font-bold text-gray-900 mb-4">
               Our Mission
-            </h3>
-            <p className="text-gray-600 text-center">
+            </h4>
+
+            <p className="text-gray-600 text-lg">
               To prevent and suppress destructive fires, investigate causes,
-              enforce fire code, and provide emergency medical and rescue
-              services.
+              enforce fire code, and provide emergency medical and rescue services.
             </p>
           </div>
 
           {/* Vision */}
-          <div className="bg-blue-50 p-8 rounded-lg w-full max-w-sm">
-            <div className="bg-blue-900 w-14 h-14 rounded-lg flex items-center justify-center mb-4 mx-auto">
-              <Eye className="w-7 h-7 text-white" />
+          <div className="bg-white rounded-2xl shadow-lg p-10 text-center hover:shadow-2xl transition">
+            <div className="bg-blue-900 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <Eye className="w-8 h-8 text-white" />
             </div>
-            <h3 className="text-xl font-bold mb-4 text-gray-800 text-center">
+
+            <h4 className="text-2xl font-bold text-gray-900 mb-4">
               Our Vision
-            </h3>
-            <p className="text-gray-600 text-center">
-              A modern, professional fire service organization recognized for
-              excellence in fire protection and emergency response.
+            </h4>
+
+            <p className="text-gray-600 text-lg">
+              A modern, professional fire service organization recognized
+              for excellence in fire protection and emergency response.
+            </p>
+          </div>
+
+          {/* Mandate */}
+          <div className="bg-white rounded-2xl shadow-lg p-10 text-center hover:shadow-2xl transition">
+            <div className="bg-green-700 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6">
+              <FileText className="w-8 h-8 text-white" />
+            </div>
+
+            <h4 className="text-2xl font-bold text-gray-900 mb-4">
+              Our Mandate
+            </h4>
+
+            <p className="text-gray-600 text-lg">
+              Enforce Republic Act 9514 (Fire Code of the Philippines),
+              prevent and suppress all destructive fires, and ensure public
+              safety through fire prevention programs, inspections, and
+              emergency response operations.
             </p>
           </div>
 
         </div>
+
       </div>
     </section>
   );

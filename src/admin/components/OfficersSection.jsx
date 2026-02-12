@@ -9,7 +9,6 @@ export default function OfficersSection({
 }) {
   const [activeMenu, setActiveMenu] = useState(null);
 
-  // Close dropdown if click outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (!e.target.closest(".menu-wrapper")) {
@@ -25,97 +24,123 @@ export default function OfficersSection({
   };
 
   return (
-    <section className="bg-white rounded-xl shadow-md p-6 mb-8 relative">
-      {/* HEADER */}
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold flex gap-2 items-center">
-          <Users className="w-6 h-6 text-red-600" />
-          Officers Management
-        </h2>
+    <div className="space-y-6">
+
+      {/* Section Header */}
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+            <Users className="text-red-600 w-6 h-6" />
+            Officers
+          </h2>
+          <p className="text-sm text-gray-500">
+            Personnel management and operational records
+          </p>
+        </div>
 
         <button
           onClick={() => {
             setSelectedOfficer(null);
             setShowOfficerModal(true);
           }}
-          className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+          className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg shadow"
         >
-          <Plus className="w-4 h-4" /> Add Officer
+          <Plus className="w-4 h-4" />
+          Add Officer
         </button>
       </div>
 
-      {/* TABLE */}
-      <div className="overflow-visible relative">
+      {/* Table Container */}
+      <div className="bg-white rounded-xl shadow border overflow-hidden">
 
-        <table className="w-full border-collapse border rounded-lg table-fixed">
-          <thead className="bg-gray-100 sticky top-0 z-10">
+        <table className="w-full text-sm">
+          <thead className="bg-gray-100 text-gray-600 uppercase text-xs">
             <tr>
-              <th className="p-3 text-left w-1/5">Name</th>
-              <th className="p-3 text-left w-1/5">Rank</th>
-              <th className="p-3 text-left w-1/5">Contact Number</th>
-              <th className="p-3 text-left w-1/5">Account Number</th>
-              <th className="p-3 text-left w-1/5">Designation</th>
-              <th className="p-3 text-center w-16"></th>
+              <th className="p-4 text-left">Personnel</th>
+              <th className="p-4 text-left">Rank</th>
+              <th className="p-4 text-left">Contact</th>
+              <th className="p-4 text-left">Account</th>
+              <th className="p-4 text-left">Designation</th>
+              <th className="p-4 text-center"></th>
             </tr>
           </thead>
 
           <tbody>
             {officers.length === 0 && (
               <tr>
-                <td colSpan="6" className="p-6 text-center text-gray-500">
+                <td colSpan="6" className="text-center p-6 text-gray-400">
                   No officers found.
                 </td>
               </tr>
             )}
 
             {officers.map((officer) => (
-              <tr key={officer.id} className="border-t hover:bg-gray-50 relative">
-                <td className="p-3 font-medium truncate">{officer.fullName}</td>
-                <td className="p-3 truncate">{officer.rank}</td>
-                <td className="p-3 truncate">{officer.contactNumber}</td>
-                <td className="p-3 truncate">{officer.accountNumber}</td>
-                <td className="p-3 truncate">{officer.designation}</td>
+              <tr
+                key={officer.id}
+                className="border-t hover:bg-gray-50 transition"
+              >
+                <td className="p-4 font-medium">
+                  {officer.fullName}
+                </td>
 
-                {/* THREE DOTS BUTTON */}
-                <td className="p-3 text-center relative menu-wrapper">
+                <td className="p-4 text-red-600 font-semibold">
+                  {officer.rank}
+                </td>
+
+                <td className="p-4 text-gray-600">
+                  {officer.contactNumber}
+                </td>
+
+                <td className="p-4 text-gray-600">
+                  {officer.accountNumber}
+                </td>
+
+                <td className="p-4 text-gray-600">
+                  {officer.designation}
+                </td>
+
+                {/* Actions */}
+                <td className="p-4 text-center relative menu-wrapper">
                   <button
                     onClick={() => toggleMenu(officer.id)}
-                    className="p-2 bg-gray-100 hover:bg-gray-200 rounded-full z-10 relative"
+                    className="p-2 hover:bg-gray-200 rounded-full"
                   >
                     <MoreVertical className="w-4 h-4 text-gray-600" />
                   </button>
 
-  {/* DROPDOWN rendered above the button */}
-                {activeMenu === officer.id && (
-                  <div className="absolute z-50 right-0 top-0 -translate-y-full mb-1 w-32 bg-white border rounded-xl shadow-lg flex flex-col">
-                    <button
-                      onClick={() => {
-                        setSelectedOfficer(officer);
-                        setShowOfficerModal(true);
-                        setActiveMenu(null);
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg text-gray-700 font-medium"
-                    >
-                      <Edit className="w-4 h-4 text-black-600" /> Edit
-                    </button>
-                    <button
-                      onClick={() => {
-                        deleteOfficer(officer.id);
-                        setActiveMenu(null);
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 rounded-lg text-gray-700 font-medium"
-                    >
-                      <Trash2 className="w-4 h-4 text-red-600" /> Delete
-                    </button>
-                  </div>
-                )}
-              </td>
+                  {activeMenu === officer.id && (
+                    <div className="absolute right-4 top-10 bg-white border shadow-lg rounded-lg w-32 z-50">
+                      <button
+                        onClick={() => {
+                          setSelectedOfficer(officer);
+                          setShowOfficerModal(true);
+                          setActiveMenu(null);
+                        }}
+                        className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 text-sm"
+                      >
+                        <Edit className="w-4 h-4" />
+                        Edit
+                      </button>
 
+                      <button
+                        onClick={() => {
+                          deleteOfficer(officer.id);
+                          setActiveMenu(null);
+                        }}
+                        className="flex items-center gap-2 w-full px-3 py-2 hover:bg-gray-100 text-sm text-red-600"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                        Delete
+                      </button>
+                    </div>
+                  )}
+                </td>
               </tr>
             ))}
           </tbody>
         </table>
+
       </div>
-    </section>
+    </div>
   );
 }
